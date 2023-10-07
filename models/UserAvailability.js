@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db/conn');
 const User = require('./User'); // Import User model
 const Week = require('./Week'); // Import Week model
+const { weekModel } = require('.');
 
 const UserAvailability = sequelize.define('UserAvailability', {
   id: {
@@ -9,7 +10,7 @@ const UserAvailability = sequelize.define('UserAvailability', {
     primaryKey: true,
     autoIncrement: true,
   },
-  weekId: {
+  week_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -46,5 +47,8 @@ const UserAvailability = sequelize.define('UserAvailability', {
     allowNull: false,
   },
 });
+
+UserAvailability.belongsTo(Week, { foreignKey: 'week_id' });
+UserAvailability.belongsTo(User, { foreignKey: 'user_id' });
 
 module.exports = UserAvailability;
