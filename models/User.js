@@ -38,6 +38,15 @@ const User = sequelize.define('User', {
     type: DataTypes.NUMBER,
     allowNull: false,
   },
+  refreshToken: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  isActivated: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
 
 module.exports = User;
