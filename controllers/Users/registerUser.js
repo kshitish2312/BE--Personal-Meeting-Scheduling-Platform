@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('./../../models/User');
+const verifyUser = require('./../../utils/sendMail');
 
 const registerUser = async (req, res) => {
   try {
@@ -12,6 +13,8 @@ const registerUser = async (req, res) => {
     if (!name || !email || !password || !phoneNumber) {
       res.status(400).send({ message: 'Please fill all the properties' });
     } else {
+      const response = await verifyUser(email, true, otp);
+
       const userData = await User.create({
         name,
         email,
@@ -20,7 +23,16 @@ const registerUser = async (req, res) => {
         userName,
         otp,
       });
-      res.status(200).send(userData);
+
+      res.status(201).send({
+        message: 'OTP sent to your email. Please verify.',
+        userData: {
+          name,
+          email,
+          phoneNumber,
+          userName,
+        },
+      });
     }
   } catch (error) {
     res.status(400).send({ message: 'Bad Request' });
@@ -28,6 +40,37 @@ const registerUser = async (req, res) => {
   }
 };
 
+const verifyOTPAndRegisterUser = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    console.log(req.body);
+
+    const user = await User.findOne({ where: { email } });
+
+    console.log(user, 'user');
+    if (!user) {
+      return res.status(400).send({ message: 'Invalid OTP' });
+    }
+
+    const hash = await bcrypt.hash(user.password, 10);
+
+    await user.destroy();
+    await User.create({
+      name: user.name,
+      email: user.email,
+      password: hash,
+      phoneNumber: user.phoneNumber,
+      userName: user.userName,
+      otp: otp,
+    });
+
+    res.status(200).send({ message: 'User registered successfully' });
+  } catch (error) {
+    res.status(400).send({ message: 'Bad Request' });
+    console.log(error);
+  }
+};
 const generateOTP = () => {
   const min = 100000;
   const max = 999999;
@@ -39,4 +82,4 @@ const generateOTP = () => {
   return otp;
 };
 
-module.exports = registerUser;
+module.exports = { registerUser, verifyOTPAndRegisterUser };
