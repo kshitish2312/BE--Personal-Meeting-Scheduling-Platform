@@ -15,6 +15,9 @@ const loginUser = async (req, res) => {
     const userLogin = await User.findOne({
       where: { email: email },
     });
+
+    const userDetails = await User.findAll({ where: { email } });
+
     if (userLogin) {
       const validPassword = await bcrypt.compare(password, userLogin.password);
       const token = jwt.sign({ data: userLogin }, SECRET_KEy);
@@ -24,7 +27,11 @@ const loginUser = async (req, res) => {
       if (!validPassword) {
         res.status(400).send({ message: 'Invalid Username and Password' });
       } else {
-        res.status(200).send({ message: 'Login Succesfully' });
+        res.status(200).send({
+          message: 'Login Succesfully',
+          data: userDetails[0].dataValues,
+          token: token,
+        });
       }
     } else {
       res.status(400).send({ message: 'User does not Exist' });
