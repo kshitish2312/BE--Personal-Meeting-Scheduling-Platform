@@ -39,8 +39,8 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
   refreshToken: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+    type: DataTypes.NUMBER,
+    allowNull: true,
   },
   isActivated: {
     type: DataTypes.BOOLEAN,

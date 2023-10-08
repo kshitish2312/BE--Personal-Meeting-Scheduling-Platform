@@ -16,7 +16,7 @@ const SlotBooking = sequelize.define('SlotBooking', {
       key: 'id',
     },
   },
-  receiver_id: {
+  receiver_Id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -33,18 +33,24 @@ const SlotBooking = sequelize.define('SlotBooking', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  start_date: {
-    type: DataTypes.DATE,
+  start_time: {
+    type: DataTypes.TIME,
     allowNull: false,
   },
-  end_date: {
-    type: DataTypes.DATE,
+  end_time: {
+    type: DataTypes.TIME,
     allowNull: false,
   },
   isRescheduled: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  bookingDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
 });
+
+SlotBooking.belongsTo(User, { foreignKey: 'user_id' });
 
 module.exports = SlotBooking;

@@ -53,13 +53,10 @@ const verifyOTPAndRegisterUser = async (req, res) => {
       return res.status(400).send({ message: 'Invalid OTP' });
     }
 
-    const hash = await bcrypt.hash(user.password, 10);
-
-    await user.destroy();
-    await User.create({
+    await user.update({
       name: user.name,
       email: user.email,
-      password: hash,
+      password: user.password,
       phoneNumber: user.phoneNumber,
       userName: user.userName,
       otp: otp,
