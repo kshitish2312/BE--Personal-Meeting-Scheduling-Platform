@@ -18,6 +18,8 @@ const loginUser = async (req, res) => {
     if (userLogin) {
       const validPassword = await bcrypt.compare(password, userLogin.password);
       const token = jwt.sign({ data: userLogin }, SECRET_KEy);
+      console.log(token, 'token');
+      console.log(validPassword, 'validPassword');
       res.cookie('jwt', token, { httpOnly: true });
       if (!validPassword) {
         res.status(400).send({ message: 'Invalid Username and Password' });

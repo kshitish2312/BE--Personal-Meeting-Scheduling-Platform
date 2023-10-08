@@ -26,19 +26,19 @@ const UserAvailability = sequelize.define('UserAvailability', {
       key: 'id',
     },
   },
-  startdate: {
+  start_date: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  enddate: {
+  end_date: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  starttime: {
+  start_time: {
     type: DataTypes.TIME,
     allowNull: false,
   },
-  endtime: {
+  end_time: {
     type: DataTypes.TIME,
     allowNull: false,
   },
