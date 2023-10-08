@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('çors');
+const cors = require('cors');
 const conn = require('./db/conn');
 const userRouter = require('./routes/users');
 const slotAvailableRouter = require('./routes/availableSlots');
@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-ápp.use(cors);
+app.use(cors());
 app.use('/users', userRouter);
 app.use('/availableSlots', slotAvailableRouter);
 app.use('/bookSlots', bookAvailableSlotsRouter);
