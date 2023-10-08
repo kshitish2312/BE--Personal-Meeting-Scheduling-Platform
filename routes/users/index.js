@@ -8,10 +8,13 @@ const {
 const {calendarSync,getEventList} = require('./../../controllers/Users/calendarSync')
 
 
+const userList = require('./../../controllers/Users/userList');
+
 userRouter.post('/register', registerUser);
 userRouter.post('/verifyUser', verifyOTPAndRegisterUser);
 userRouter.post('/login', loginUser);
 userRouter.post('/work',calendarSync)
 userRouter.post('/geteventlist',getEventList)
+userRouter.get('/getAllUsers', userList);
 
 module.exports = userRouter;
