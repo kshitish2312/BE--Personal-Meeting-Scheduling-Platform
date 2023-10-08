@@ -46,7 +46,7 @@ const verifyOTPAndRegisterUser = async (req, res) => {
 
     console.log(req.body);
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email, otp } });
 
     console.log(user, 'user');
     if (!user) {
