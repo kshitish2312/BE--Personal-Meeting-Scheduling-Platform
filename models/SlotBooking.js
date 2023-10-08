@@ -51,6 +51,7 @@ const SlotBooking = sequelize.define('SlotBooking', {
   },
 });
 
-SlotBooking.belongsTo(User, { foreignKey: 'user_id' });
+SlotBooking.belongsTo(User, { foreignKey: 'sender_id', as: 'sender' });
+SlotBooking.belongsTo(User, { foreignKey: 'receiver_Id', as: 'reciever' });
 
 module.exports = SlotBooking;

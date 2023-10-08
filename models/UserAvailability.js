@@ -2,7 +2,6 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db/conn');
 const User = require('./User'); // Import User model
 const Week = require('./Week'); // Import Week model
-const { weekModel } = require('.');
 
 const UserAvailability = sequelize.define('UserAvailability', {
   id: {
